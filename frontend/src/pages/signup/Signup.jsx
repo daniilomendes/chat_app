@@ -1,5 +1,6 @@
 import React from "react";
 import GenderCheckbox from "./GenderCheckbox";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   return (
@@ -53,12 +54,12 @@ export default function SignUp() {
 
           <GenderCheckbox />
 
-          <a
-            href="/signin"
+          <Link
+            to="/login"
             className="text-sm text-white  hover:underline hover:text-blue-600 mt-2 inline-block"
           >
             Já possui uma conta?
-          </a>
+          </Link>
 
           <div>
             <button className="btn btn-block btn-sm mt-2 border border-slate-700">Cadastrar</button>

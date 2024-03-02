@@ -37,3 +37,23 @@ export const sendMessage = async (req, res) => {
     return res.status(500).json({ error: "Erro interno do servidor!" });
   }
 };
+
+export const getMessages = async (req, res) => {
+  try {
+    const { id: userToChatId } = req.params;
+    const senderId = req.user._id;
+
+    const conversation = await Conversation.findOne({
+      participants: { $all: [senderId, userToChatId] },
+    }).populate("messages");
+
+    if (!conversation) return res.status(200).json([]);
+
+    const messages = conversation.messages;
+
+    res.status(201).json(messages);
+  } catch (error) {
+    console.log("Erro no getMessages controller", error.message);
+    return res.status(500).json({ error: "Erro interno do servidor!" });
+  }
+};

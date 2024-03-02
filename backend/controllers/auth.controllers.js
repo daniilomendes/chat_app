@@ -45,17 +45,46 @@ export const signup = async (req, res) => {
       return res.status(400).json({ error: "Usuário inválido!" });
     }
   } catch (error) {
-    console.log("Erro no signuo controller", error.message);
-    return res.status(500).json({ error: "Erro interno no servidor!" });
+    console.log("Erro no signup controller", error.message);
+    return res.status(500).json({ error: "Erro interno do servidor!" });
   }
 };
 
 export const login = async (req, res) => {
   try {
-  } catch (error) {}
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      user?.password || ""
+    );
+
+    if (!user || !isPasswordCorrect) {
+      return res.status(400).json({ error: "Nome ou senha inválidas." });
+    }
+
+    generateTokenAndSetCookie(user._id, res);
+
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      profilePic: user.profilePic,
+    });
+  } catch (error) {
+    console.log("Erro no login controller", error.message);
+    return res.status(500).json({ error: "Erro interno do servidor!" });
+  }
 };
 
-export const logout = async (req, res) => {
+export const logout = (req, res) => {
   try {
-  } catch (error) {}
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({
+      message: "Logout feito com sucesso!",
+    });
+  } catch (error) {
+    console.log("Erro no logout controller", error.message);
+    return res.status(500).json({ error: "Erro interno do servidor!" });
+  }
 };

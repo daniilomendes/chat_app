@@ -54,9 +54,9 @@ export default function Login() {
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2" disabled={login}>
+            <button className="btn btn-block btn-sm mt-2" disabled={loading}>
               {loading ? (
-                <spam className="loading loading-spinner"></spam>
+                <span className="loading loading-spinner"></span>
               ) : (
                 "Entrar"
               )}

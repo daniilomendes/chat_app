@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(username, password);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
@@ -9,7 +20,7 @@ export default function Login() {
           Entrar
           <span className="text-blue-500"> ChatApp</span>
         </h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="label p-2">
               <span className="text-base label-text text-white">Usuário</span>
@@ -18,6 +29,8 @@ export default function Login() {
               type="text"
               placeholder="Digite o nome de usuário"
               className="w-full input input-bordered h-10"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div>
@@ -28,6 +41,8 @@ export default function Login() {
               type="password"
               placeholder="Digite sua senha"
               className="w-full input input-bordered h-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -39,7 +54,13 @@ export default function Login() {
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2">Entrar</button>
+            <button className="btn btn-block btn-sm mt-2" disabled={login}>
+              {loading ? (
+                <spam className="loading loading-spinner"></spam>
+              ) : (
+                "Entrar"
+              )}
+            </button>
           </div>
         </form>
       </div>

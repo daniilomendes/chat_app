@@ -103,8 +103,15 @@ export default function SignUp() {
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2 border border-slate-700">
-              Cadastrar
+            <button
+              className="btn btn-block btn-sm mt-2 border border-slate-700"
+              disabled={loading}
+            >
+              {loading ? (
+                <spam className="loading loading-spinner"></spam>
+              ) : (
+                "Cadastrar"
+              )}
             </button>
           </div>
         </form>

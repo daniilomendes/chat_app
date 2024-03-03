@@ -19,8 +19,8 @@ export default function MessageContainer() {
         <>
           {/* Header */}
           <div className="bg-slate-500 px-4 py-2 mb-2">
-            <span className="label-text">Para:</span>{" "}
-            <span className="text-gray-900 font-bold">
+            <span className="label-text text-white">Para:</span>{" "}
+            <span className="font-bold text-white">
               {selectedConversation.fullName}
             </span>
           </div>
